@@ -787,6 +787,15 @@ https://devcenter.heroku.com/articles/ruby-versions#your-ruby-version-is-x-but-y
     end
   end
 
+  def inject_flynn_database_yml
+    instrument 'ruby.inject_flynn_database_yml' do
+      log('inject_flynn_database_yml') do
+        topic('Inject config/database.yml from database.flynn.yml')
+        run('mv config/database.flynn.yml config/database.yml')
+      end
+    end
+  end
+
   # writes ERB based database.yml for Rails. The database.yml uses the DATABASE_URL from the environment during runtime.
   def create_database_yml
     instrument 'ruby.create_database_yml' do
