@@ -105,6 +105,7 @@ WARNING
         load_bundler_cache
         build_bundler(bundle_path: "vendor/bundle", default_bundle_without: "development:test")
         post_bundler
+        inject_flynn_database_yml
         create_database_yml
         install_binaries
         run_assets_precompile_rake_task
@@ -937,6 +938,16 @@ https://devcenter.heroku.com/articles/ruby-versions#your-ruby-version-is-x-but-y
         "-r#{syck_hack_file}"
       else
         ""
+      end
+    end
+  end
+
+  def inject_flynn_database_yml
+    instrument 'ruby.inject_flynn_database_yml' do
+      log('inject_flynn_database_yml') do
+        db_file = ENV["DATABASE_YML_FILE"] || 'database.flynn.yml'
+        topic("Inject config/database.yml from ")
+        run("mv config/{#db_file} config/database.yml")
       end
     end
   end
