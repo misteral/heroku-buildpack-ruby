@@ -946,8 +946,8 @@ https://devcenter.heroku.com/articles/ruby-versions#your-ruby-version-is-x-but-y
     instrument 'ruby.inject_flynn_database_yml' do
       log('inject_flynn_database_yml') do
         db_file = ENV["DATABASE_YML_FILE"] || 'database.flynn.yml'
-        topic("Inject config/database.yml from ")
-        run("mv config/{#db_file} config/database.yml")
+        topic("Inject config/database.yml from #{db_file}")
+        run("mv config/#{db_file} config/database.yml")
       end
     end
   end
